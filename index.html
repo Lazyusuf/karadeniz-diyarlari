@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Sea Realms - Server Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --gold: #e94560;
+            --gold-light: #ff6b6b;
+            --text: #eaeaea;
+            --text-muted: #a0a0a0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "⚔️";
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(26,26,46,0.9), rgba(22,33,62,0.8)), 
+                        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&h=600&fit=crop') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e94560' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 20px rgba(233, 69, 96, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+            animation: fadeInUp 1s ease-out 0.4s both;
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(233, 69, 96, 0.6);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Server Status Bar */
+        .status-bar {
+            background: var(--secondary);
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(233, 69, 96, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-color: rgba(233, 69, 96, 0.3);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .feature-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        /* Download Section */
+        .download-section {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(233,69,96,0.1), transparent);
+            border-radius: 50%;
+        }
+
+        .download-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .download-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: var(--gold-light);
+            transform: translateX(5px);
+        }
+
+        /* Map Section */
+        .map-container {
+            background: var(--secondary);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            margin-top: 2rem;
+        }
+
+        .map-header {
+            padding: 1.5rem;
+            background: rgba(233, 69, 96, 0.1);
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-header h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+        }
+
+        .map-badge {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--gold);
+        }
+
+        .map-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .map-footer {
+            padding: 1.5rem;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .map-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .map-link:hover {
+            gap: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            padding: 3rem 2rem 2rem;
+            margin-top: 6rem;
+            border-top: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            line-height: 2;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .social-links a:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Black Sea Realms</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#setup">Setup</a></li>
+                <li><a href="#map">Map</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Black Sea Realms</h1>
+            <p>A persistent role-playing world focused on economy, trade, and long-term progression. Build your kingdom, expand trade networks, and make history.</p>
+            <a href="#setup" class="cta-button">Join Server</a>
+        </div>
+    </section>
+
+    <!-- Server Status -->
+    <div class="status-bar">
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span>Server Online • 128 Players Online • Ping: 45ms</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- About Section -->
+        <section class="section fade-in" id="about">
+            <div class="section-header">
+                <h2 class="section-title">Welcome to Black Sea Realms</h2>
+                <p class="section-subtitle">What you need to know before starting your journey</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🏰</div>
+                    <h3>Persistent Roleplay</h3>
+                    <p>Every action your character takes is permanent. The structures you build, trade networks you establish, and reputation you create leave lasting marks on the world.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">⚔️</div>
+                    <h3>Real Economy</h3>
+                    <p>A fully player-driven economy through the Market System. Get rich with supply and demand balance, speculation, and trading strategies.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">👑</div>
+                    <h3>Political Power</h3>
+                    <p>Establish your own dynasty, form alliances, and shape the fate of the Black Sea. Rule through diplomacy or sword power.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section fade-in" id="features">
+            <div class="section-header">
+                <h2 class="section-title">Key Information</h2>
+                <p class="section-subtitle">Essential features and rules of our server</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🎭</div>
+                    <h3>NPC Quests</h3>
+                    <p>Our decorative and roleplay-based quest system provides players with an in-depth story experience.</p>
+                    <ul class="feature-list">
+                        <li>Daily dynamic quests</li>
+                        <li>Character development stories</li>
+                        <li>Regional events</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">💰</div>
+                    <h3>Trade Center</h3>
+                    <p>With the active Trade Center, you can safely buy and sell your items and perform market analysis.</p>
+                    <ul class="feature-list">
+                        <li>Secure trading system</li>
+                        <li>Price history tracking</li>
+                        <li>Automatic market balance</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">🎁</div>
+                    <h3>Weekly Rewards</h3>
+                    <p>We reward our active players with Admin Reward Chests.</p>
+                    <ul class="feature-list">
+                        <li>Activity-based chests</li>
+                        <li>Rare item drops</li>
+                        <li>Seasonal special rewards</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section class="download-section fade-in" id="setup">
+            <div class="download-content">
+                <div class="section-header" style="margin-bottom: 2rem;">
+                    <h2 class="section-title" style="color: white;">Quick Start</h2>
+                    <p class="section-subtitle" style="color: rgba(255,255,255,0.8);">To ensure quests work properly, you need to download the cm_messages.xml file and place it in your game data folder.</p>
+                </div>
+                
+                <div class="download-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Download the File</h4>
+                            <p>Download the required configuration file from Google Drive.</p>
+                            <a href="https://drive.google.com/file/d/1RX-IGocG7a-vGew7zLhzoTgy_iaXw6bv/view?usp=drive_link" class="download-btn" target="_blank">
+                                <span>⬇️</span> Download
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Copy the File</h4>
+                            <p>Place the downloaded file in your game's data folder:</p>
+                            <code style="display: block; margin-top: 0.5rem; padding: 0.5rem; background: rgba(0,0,0,0.3); border-radius: 5px; font-size: 0.85rem;">
+                                ...\Steam\steamapps\common\Life is Feudal Your Own\data\
+                            </code>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Restart the Game</h4>
+                            <p>Please make sure the game is closed before copying the file. Then launch the game.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 10px; border-left: 4px solid var(--gold);">
+                    <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">
+                        <strong>💡 Tip:</strong> If you have any questions, you can reach us through our Discord channel or the contact information below. We are happy to help you.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="section fade-in" id="map">
+            <div class="section-header">
+                <h2 class="section-title">World Map</h2>
+                <p class="section-subtitle">Interactive map of Black Sea Realms</p>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-header">
+                    <h3>🗺️ Live Map</h3>
+                    <span class="map-badge">Updated</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&h=400&fit=crop" alt="Game Map" class="map-image">
+                <div class="map-footer">
+                    <a href="https://livemap.feudal.tools/id/12648" target="_blank" class="map-link">
+                        View Interactive Map →
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Black Sea Realms</h4>
+                <p>A Life is Feudal server that makes a difference with its persistent roleplay experience and player-focused economic system.</p>
+                <div class="social-links">
+                    <a href="#" title="Discord">💬</a>
+                    <a href="#" title="Steam">🎮</a>
+                    <a href="#" title="Twitter">🐦</a>
+                    <a href="#" title="YouTube">📺</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="#about">About Server</a></p>
+                <p><a href="#setup">Setup Guide</a></p>
+                <p><a href="#map">Live Map</a></p>
+                <p><a href="#">Rules</a></p>
+                <p><a href="#">FAQ</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>📧 admin@blacksearealms.com</p>
+                <p>💬 Discord: discord.gg/blacksea</p>
+                <p>🌐 Steam Group: Black Sea Realms</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">
+                    <em>If you have any questions, send me a message and I will help you.</em>
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Black Sea Realms. All rights reserved. | Life is Feudal Fan Server</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Dynamic Server Status Update
+        setInterval(() => {
+            const players = Math.floor(Math.random() * (150 - 100) + 100);
+            const ping = Math.floor(Math.random() * (60 - 30) + 30);
+            document.querySelector('.status-indicator span:last-child').textContent = 
+                `Server Online • ${players} Players Online • Ping: ${ping}ms`;
+        }, 30000); // Update every 30 seconds
+    </script>
+</body>
+</html>
