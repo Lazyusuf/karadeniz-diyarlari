@@ -20,6 +20,10 @@
             --gold-light: #ff6b6b;
             --text: #eaeaea;
             --text-muted: #a0a0a0;
+
+            /* Quick Start extras */
+            --success: #4ade80;
+            --warning: #fbbf24;
         }
 
         body {
@@ -316,10 +320,12 @@
             color: var(--gold);
         }
 
-        /* Download Section */
-        .download-section {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: 20px;
+        /* -----------------------------
+           QUICK START SECTION (TABS)
+        ------------------------------ */
+        .quick-start-section {
+            background: linear-gradient(135deg, var(--secondary) 0%, rgba(15, 52, 96, 0.5) 100%);
+            border-radius: 24px;
             padding: 3rem;
             margin: 4rem 0;
             border: 1px solid rgba(233, 69, 96, 0.2);
@@ -327,62 +333,149 @@
             overflow: hidden;
         }
 
-        .download-section::before {
+        .quick-start-section::before {
             content: '';
             position: absolute;
             top: -50%;
             right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(233,69,96,0.1), transparent);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(233,69,96,0.08), transparent);
             border-radius: 50%;
         }
 
-        .download-content {
+        .setup-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.2);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
             position: relative;
             z-index: 2;
         }
 
-        .download-steps {
+        .tab-button {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            color: var(--text-muted);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tab-button:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .setup-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
         }
 
-        .step {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
+        .setup-card {
+            background: rgba(26, 26, 46, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(233, 69, 96, 0.1);
+            position: relative;
+            transition: all 0.3s;
         }
 
-        .step-number {
-            width: 40px;
-            height: 40px;
+        .setup-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(233, 69, 96, 0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .setup-card.featured {
+            border: 2px solid var(--gold);
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1), rgba(26, 26, 46, 0.8));
+        }
+
+        .setup-card.featured::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: -12px;
+            right: 20px;
             background: var(--gold);
-            border-radius: 50%;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .setup-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
         }
 
-        .step-content h4 {
+        .setup-card h3 {
+            font-family: 'Cinzel', serif;
             color: var(--gold);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
 
-        .step-content p {
+        .setup-card p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .path-box {
+            background: rgba(0,0,0,0.4);
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--success);
+            border-left: 3px solid var(--gold);
+            margin-top: 0.5rem;
+            word-break: break-all;
         }
 
         .download-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            margin-top: 1rem;
             padding: 0.8rem 1.5rem;
             background: var(--gold);
             color: white;
@@ -390,12 +483,99 @@
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s;
+            margin-top: 1rem;
         }
 
         .download-btn:hover {
             background: var(--gold-light);
             transform: translateX(5px);
         }
+
+        .warning-box {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .warning-box .icon {
+            font-size: 1.5rem;
+        }
+
+        .warning-box p {
+            color: var(--warning);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .steps-container {
+            margin-top: 1.5rem;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number-box {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .step-content h4 {
+            color: var(--text);
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-structure {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            font-family: 'Courier New', monospace;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-icon {
+            font-size: 1.2rem;
+        }
+
+        .folder { color: #fbbf24; }
+        .file { color: var(--success); }
 
         /* Map Section */
         .map-container {
@@ -447,7 +627,7 @@
             font-weight: 500;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.5s;
             transition: gap 0.3s;
         }
 
@@ -522,14 +702,8 @@
 
         /* Animations */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .fade-in {
@@ -545,40 +719,19 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .setup-tabs { flex-direction: column; }
+            .setup-grid { grid-template-columns: 1fr; }
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--primary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gold-light);
-        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--primary); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
     </style>
 </head>
 <body>
@@ -621,20 +774,20 @@
                 <h2 class="section-title">Welcome to Black Sea Realms</h2>
                 <p class="section-subtitle">What you need to know before starting your journey</p>
             </div>
-            
+
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-icon">🏰</div>
                     <h3>Persistent Roleplay</h3>
                     <p>Every action your character takes is permanent. The structures you build, trade networks you establish, and reputation you create leave lasting marks on the world.</p>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-icon">⚔️</div>
                     <h3>Real Economy</h3>
                     <p>A fully player-driven economy through the Market System. Get rich with supply and demand balance, speculation, and trading strategies.</p>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-icon">👑</div>
                     <h3>Political Power</h3>
@@ -649,7 +802,7 @@
                 <h2 class="section-title">Key Information</h2>
                 <p class="section-subtitle">Essential features and rules of our server</p>
             </div>
-            
+
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-icon">🎭</div>
@@ -661,7 +814,7 @@
                         <li>Regional events</li>
                     </ul>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-icon">💰</div>
                     <h3>Trade Center</h3>
@@ -672,7 +825,7 @@
                         <li>Automatic market balance</li>
                     </ul>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-icon">🎁</div>
                     <h3>Weekly Rewards</h3>
@@ -686,51 +839,207 @@
             </div>
         </section>
 
-        <!-- Download Section -->
-        <section class="download-section fade-in" id="setup">
-            <div class="download-content">
-                <div class="section-header" style="margin-bottom: 2rem;">
-                    <h2 class="section-title" style="color: white;">Quick Start</h2>
-                    <p class="section-subtitle" style="color: rgba(255,255,255,0.8);">To ensure quests work properly, you need to download the cm_messages.xml file and place it in your game data folder.</p>
+        <!-- QUICK START (NEW TABBED SECTION) -->
+        <section class="quick-start-section fade-in" id="setup">
+            <div class="section-header" style="margin-bottom: 2rem; position: relative; z-index: 2;">
+                <h2 class="section-title" style="color: white;">Quick Start</h2>
+                <p class="section-subtitle" style="color: rgba(255,255,255,0.8);">
+                    Choose your setup method and join the realm in minutes.
+                </p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="setup-tabs">
+                <button class="tab-button active" onclick="switchTab('basic', this)">📋 Basic Setup</button>
+                <button class="tab-button" onclick="switchTab('jorvik', this)">⚔️ Jorvik MOD Setup</button>
+                <button class="tab-button" onclick="switchTab('troubleshoot', this)">🔧 Troubleshooting</button>
+            </div>
+
+            <!-- Basic Setup Tab -->
+            <div id="basic" class="tab-content active">
+                <div class="setup-grid">
+                    <div class="setup-card">
+                        <div class="setup-icon">📦</div>
+                        <h3>Download Configuration</h3>
+                        <p>Download the required configuration file so quests work properly.</p>
+
+                        <!-- (Senin eski koddaki ZIP linkin) -->
+                        <a href="cm_messages.zip" class="download-btn">
+                            <span>⬇</span> Download Configuration (ZIP)
+                        </a>
+
+                        <!-- İstersen bu XML butonunu kaldırabiliriz -->
+                        <a href="https://drive.google.com/file/d/1RX-IGocG7a-vGew7zLhzoTgy_iaXw6bv/view?usp=drive_link"
+                           class="download-btn" target="_blank" style="margin-left: .5rem;">
+                            <span>📄</span> Download XML
+                        </a>
+                    </div>
+
+                    <div class="setup-card featured">
+                        <div class="setup-icon">📁</div>
+                        <h3>Copy the File</h3>
+                        <p>Place the downloaded file in your game's data folder:</p>
+
+                        <div class="path-box">
+                            ...\Steam\steamapps\common\Life is Feudal Your Own\data\
+                        </div>
+
+                        <div class="warning-box">
+                            <span class="icon">⚠️</span>
+                            <p><strong>Important:</strong> Make sure the game is completely closed before copying the file!</p>
+                        </div>
+                    </div>
+
+                    <div class="setup-card">
+                        <div class="setup-icon">🚀</div>
+                        <h3>Restart the Game</h3>
+                        <p>Start the game and connect to Black Sea Realms server.</p>
+
+                        <div class="steps-container">
+                            <div class="step-item">
+                                <div class="step-number-box">1</div>
+                                <div class="step-content">
+                                    <h4>Close Game</h4>
+                                    <p>Ensure Life is Feudal is not running.</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number-box">2</div>
+                                <div class="step-content">
+                                    <h4>Copy File</h4>
+                                    <p>Paste cm_messages.xml into the data folder.</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number-box">3</div>
+                                <div class="step-content">
+                                    <h4>Launch</h4>
+                                    <p>Start game and join the server.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="download-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                        <p>
-                            Download the required configuration file directly from our official GitHub repository.
-                        </p>
-<a href="cm_messages.zip" class="download-btn">
-    <span>⬇</span> Download Configuration (ZIP)
-</a>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Copy the File</h4>
-                            <p>Place the downloaded file in your game's data folder:</p>
-                            <code style="display: block; margin-top: 0.5rem; padding: 0.5rem; background: rgba(0,0,0,0.3); border-radius: 5px; font-size: 0.85rem;">
-                                ...\Steam\steamapps\common\Life is Feudal Your Own\data\
-                            </code>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>Restart the Game</h4>
-                            <p>Please make sure the game is closed before copying the file. Then launch the game.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 2rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 10px; border-left: 4px solid var(--gold);">
+
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 10px; border-left: 4px solid var(--gold); position: relative; z-index: 2;">
                     <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">
                         <strong>💡 Tip:</strong> If you have any questions, you can reach us through our Discord channel or the contact information below. We are happy to help you.
                     </p>
+                </div>
+            </div>
+
+            <!-- Jorvik MOD Setup Tab -->
+            <div id="jorvik" class="tab-content">
+                <div class="setup-grid">
+                    <div class="setup-card" style="grid-column: 1 / -1;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="setup-icon" style="margin: 0;">⚔️</div>
+                            <div>
+                                <h3 style="margin: 0;">Jorvik MOD Installation</h3>
+                                <p style="margin: 0.5rem 0 0 0; color: var(--text-muted);">
+                                    Complete MOD package with enhanced gameplay features
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-card featured">
+                        <div class="setup-icon">📦</div>
+                        <h3>MOD Contents</h3>
+                        <p>The Jorvik MOD includes the following folders and files:</p>
+
+                        <div class="file-structure">
+                            <div class="file-item"><span class="file-icon folder">📁</span><span>art/</span></div>
+                            <div class="file-item"><span class="file-icon folder">📁</span><span>data/</span></div>
+                            <div class="file-item"><span class="file-icon folder">📁</span><span>gui/</span></div>
+                            <div class="file-item"><span class="file-icon folder">📁</span><span>mod/</span></div>
+                            <div class="file-item"><span class="file-icon folder">📁</span><span>scripts/</span></div>
+                            <div class="file-item"><span class="file-icon file">📄</span><span>license.txt</span></div>
+                        </div>
+
+                        <div class="warning-box">
+                            <span class="icon">💡</span>
+                            <p><strong>Note:</strong> Copy ALL folders and files listed above to your game directory.</p>
+                        </div>
+                    </div>
+
+                    <div class="setup-card" style="grid-column: 1 / -1;">
+                        <div class="setup-icon">🎯</div>
+                        <h3>Installation Steps</h3>
+
+                        <div class="steps-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                            <div class="step-item">
+                                <div class="step-number-box">1</div>
+                                <div class="step-content">
+                                    <h4>Download Jorvik MOD</h4>
+                                    <p>Get the complete MOD package from our repository</p>
+                                    <a href="#" class="download-btn" style="margin-top: 0.5rem;">
+                                        <span>⬇️</span> Download MOD
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-number-box">2</div>
+                                <div class="step-content">
+                                    <h4>Close Game</h4>
+                                    <p>Ensure Life is Feudal is completely closed before installing</p>
+                                </div>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-number-box">3</div>
+                                <div class="step-content">
+                                    <h4>Copy All Files</h4>
+                                    <p>Copy ALL folders and license.txt to:</p>
+                                    <div class="path-box">
+                                        ...\Steam\steamapps\common\Life is Feudal Your Own\
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-number-box">4</div>
+                                <div class="step-content">
+                                    <h4>Overwrite if Asked</h4>
+                                    <p>Click "Yes to All" when prompted to replace existing files</p>
+                                </div>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-number-box">5</div>
+                                <div class="step-content">
+                                    <h4>Launch & Enjoy</h4>
+                                    <p>Start the game and experience enhanced Black Sea Realms</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting Tab -->
+            <div id="troubleshoot" class="tab-content">
+                <div class="setup-grid">
+                    <div class="setup-card">
+                        <div class="setup-icon">❓</div>
+                        <h3>Quests Not Working?</h3>
+                        <p>Make sure cm_messages.xml is in the correct location:</p>
+                        <div class="path-box">...\Life is Feudal Your Own\data\cm_messages.xml</div>
+                    </div>
+
+                    <div class="setup-card">
+                        <div class="setup-icon">🎮</div>
+                        <h3>Game Crashes?</h3>
+                        <p>Verify game files through Steam:<br>
+                        Right Click LiF → Properties → Local Files → Verify Integrity</p>
+                    </div>
+
+                    <div class="setup-card">
+                        <div class="setup-icon">🔄</div>
+                        <h3>MOD Conflicts?</h3>
+                        <p>Remove any other MODs before installing Jorvik. Clean installation recommended.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -741,7 +1050,7 @@
                 <h2 class="section-title">World Map</h2>
                 <p class="section-subtitle">Interactive map of Black Sea Realms</p>
             </div>
-            
+
             <div class="map-container">
                 <div class="map-header">
                     <h3>🗺️ Live Map</h3>
@@ -770,14 +1079,14 @@
                     <a href="#" title="YouTube">📺</a>
                 </div>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <p><a href="#about">About Server</a></p>
                 <p><a href="#setup">Setup Guide</a></p>
                 <p><a href="#map">Live Map</a></p>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Contact</h4>
                 <p>📧 </p>
@@ -788,13 +1097,23 @@
                 </p>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
             <p>&copy; 2026 Black Sea Realms. All rights reserved. | Life is Feudal Fan Server</p>
         </div>
     </footer>
 
     <script>
+        // Tabs (safe: no event dependency)
+        function switchTab(tabName, btn) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+
+            const el = document.getElementById(tabName);
+            if (el) el.classList.add('active');
+            if (btn) btn.classList.add('active');
+        }
+
         // Scroll Animation
         const observerOptions = {
             threshold: 0.1,
@@ -829,9 +1148,9 @@
         setInterval(() => {
             const players = Math.floor(Math.random() * (150 - 100) + 100);
             const ping = Math.floor(Math.random() * (60 - 30) + 30);
-            document.querySelector('.status-indicator span:last-child').textContent = 
+            document.querySelector('.status-indicator span:last-child').textContent =
                 `Server Online • ${players} Players Online • Ping: ${ping}ms`;
-        }, 30000); // Update every 30 seconds
+        }, 30000);
     </script>
 </body>
 </html>
